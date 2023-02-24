@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title> Table Plus Plus</title>
+  <title> Table Plus Plus</title>
+  <script src="JavaScript/main.js"></script>
 </head>
 <style>
-table, th, td {
-  border:1px solid black;
-}
+  table,
+  th,
+  td {
+    border: 1px solid black;
+  }
+
 </style>
+
 <body>
-<table style="width:100%">
-  <tr>
-    <th>Device Name</th>
-    <th>IP addresses</th>
-    <th>Host name</th>
-    <th>Asset number</th>
-    <th>MAC address</th>
-    <th>Physical Location</th>
-  </tr>
-  <tr>
-    <td>MacBook Air </td>
-    <td>200.70.109.225</td>
-    <td>hostname.eng.sun.com</td>
-    <td>15004567</td>
-    <td>00-B0-D0-63-C2-26</td>
-    <td>Library </td>
-    <td>Library </td>
 
-  </tr>
+  <input type="file" id="fileUpload" />
+  <input type="button" id="upload" value="Upload CSV" onclick="Upload()" />
+  <input type="button" id="download" value="Download CSV" onclick="tableToCSV()" />
+  
+  <hr />
 
-</table>
+  <input type="text" id="myInput" onkeyup='tableSearch()' placeholder="Search...">
+  <input type="button" id="AddItem" value="+" onclick="ToggleForm()">
+  <div id="FormDiv">
+  </div>
+  <div id="TableDiv">
+  </div>
+  <script>
+    function test() {
+      alert(document.getElementById("fileUpload").value);
+    }
+  </script>
 </body>
+
 </html>
