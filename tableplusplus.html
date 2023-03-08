@@ -17,22 +17,17 @@
 <body>
 
   <input type="file" id="fileUpload" />
-  <input type="button" id="upload" value="Upload CSV" onclick="Upload()" />
+  <input type="button" id="upload" value="Upload CSV" onclick="UploadData()" />
   <input type="button" id="download" value="Download CSV" onclick="tableToCSV()" />
   
   <hr />
 
-  <input type="text" id="myInput" onkeyup='tableSearch()' placeholder="Search...">
-  <input type="button" id="AddItem" value="+" onclick="ToggleForm()">
+  <input type="text" id="myInput" onkeyup='SearchData()' placeholder="Search...">
+  <input type="button" id="AddItem" value="+" onclick="MakeInputUI()">
   <div id="FormDiv">
   </div>
   <div id="TableDiv">
   </div>
-  <script>
-    function test() {
-      alert(document.getElementById("fileUpload").value);
-    }
-  </script>
 </body>
 
 </html>
