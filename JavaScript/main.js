@@ -15,7 +15,7 @@ the next.
 if not match is found, it will hide the row.
 
 */
-function SearchData() {
+function searchData() {
   let input, filter, table, tr, td, txtValue;
 
   //Intialising Variables
@@ -26,18 +26,18 @@ function SearchData() {
 
   //Searches through all columns of every row for matching data
   for (let i = 0; i < tr.length; i++) {
-      for (let j = 0; j < datalength; j++) {
-          td = tr[i].cells[j];
-          if (td) {
-              txtValue = td.textContent || td.innerText;
-              if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                  tr[i].style.display = "";
-                  break;  // break out of inner loop if match found
-              } else {
-                  tr[i].style.display = "none";
-              }
-          }
+    for (let j = 0; j < datalength; j++) {
+      td = tr[i].cells[j];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+          break;  // break out of inner loop if match found
+        } else {
+          tr[i].style.display = "none";
+        }
       }
+    }
   }
 }
 
@@ -50,7 +50,7 @@ returns a HTML table, which is then handed off to the
 displayHTMLTable function, this displays the table
 made on the HTML frontend
 */
-function UploadData() {
+function uploadData() {
   var fileUpload = document.getElementById("fileUpload");
 
   var reader = new FileReader();
@@ -77,27 +77,28 @@ function makeTable(input) {
 
   rowlength = rows.length - 1;
   for (var i = 0; i < rows.length; i++) {
-      var cells = rows[i].split(",");
-      if (datalength == 0) {
-          datalength = cells.length;
-          headerData = cells;
+    var cells = rows[i].split(",");
+    if (datalength == 0) {
+      datalength = cells.length;
+      headerData = cells;
+    }
+
+    if (cells.length > 1) {
+      var row = table.insertRow(-1);
+      if (i == 0) {
+        row.classList.add("head");
+      } else {
+        row.classList.add("body");
       }
 
-      if (cells.length > 1) {
-          var row = table.insertRow(-1);
-          if (i == 0) {
-              row.classList.add("head");
-          } else {
-              row.classList.add("body");
-          }
-
-          for (var j = 0; j < cells.length; j++) {
-              var cell = row.insertCell(-1);
-              cell.innerHTML = cells[j];
-          }
-
-        deleteButtonOrCheck(row, i);      
+      for (var j = 0; j < cells.length; j++) {
+        var cell = row.insertCell(-1);
+        cell.innerHTML = cells[j];
       }
+
+      deleteButtonOrCheck(row, i);
+      editButtonOrHeader(row, i);
+    }
   }
   return table;
 }
@@ -107,7 +108,7 @@ displayHTMLTable takes a already made html table and finds
 the approprate div on the front end in order to append 
 the table to
 */
-function displayHTMLTable(table){
+function displayHTMLTable(table) {
   var TableDiv = document.getElementById("TableDiv");
   TableDiv.innerHTML = "";
   TableDiv.appendChild(table);
@@ -118,22 +119,46 @@ deleteButtonOrCheck will add a delte button to the first
 row of data, or a delete check mark in order to let the
 user delete rows of data
 */
-function deleteButtonOrCheck(row, i){
-    if(i > 0){
-      var cellDelBox = row.insertCell(-1);
-      var delcheck = document.createElement("input");
-      delcheck.setAttribute("type", "checkbox");
-      delcheck.setAttribute("onclick", "selectToggle(this.id)");
-      delcheck.setAttribute("id", "check" + i);
-    }else{
-      var cellDelBox = row.insertCell(-1);
-      var delcheck = document.createElement("input");
-      delcheck.setAttribute("type", "button");
-      delcheck.setAttribute("onclick", "rowDelete()");
-      delcheck.setAttribute("value", "Delete Item(s)");
-    }
-    cellDelBox.appendChild(delcheck);
+function deleteButtonOrCheck(row, i) {
+  if (i > 0) {
+    var cellDelBox = row.insertCell(-1);
+    var delcheck = document.createElement("input");
+    delcheck.setAttribute("type", "checkbox");
+    delcheck.setAttribute("onclick", "selectToggle(this.id)");
+    delcheck.setAttribute("id", "check" + i);
+  } else {
+    var cellDelBox = row.insertCell(-1);
+    var delcheck = document.createElement("input");
+    delcheck.setAttribute("type", "button");
+    delcheck.setAttribute("onclick", "rowDelete()");
+    delcheck.setAttribute("value", "Delete Item(s)");
   }
+  cellDelBox.appendChild(delcheck);
+}
+
+
+/*
+editButtonOrHeader will add an edit button to all rows
+in the tabel exept for the first on. These buttons allow
+the user to edit the data within the table.
+
+the first row will have a lable named edit
+*/
+function editButtonOrHeader(row, i) {
+  if (i > 0) {
+    var cellEditBox = row.insertCell(-1);
+    var editButton = document.createElement("input");
+    editButton.setAttribute("type", "button");
+    editButton.setAttribute("onclick", "editOrSaveRow(this.id)");
+    editButton.setAttribute("value", "Edit");
+    editButton.setAttribute("id", "editButton" + i);
+    cellEditBox.appendChild(editButton);
+  } else {
+    var cellEditBox = row.insertCell(-1);
+    cellEditBox.innerHTML = "Edit";
+  }
+
+}
 
 /*
 MakeInputUI is a driver function
@@ -141,18 +166,18 @@ MakeInputUI is a driver function
 it allows the user to create a form, 
 and appends it to the proper div
 */
-function MakeInputUI() {
+function makeInputUI() {
   if (!formOpen) {
 
     formOpen = true;
     var form = document.createElement("form");
     form.setAttribute("method", "post");
 
-    
-    RowInputForm(form);
+
+    rowInputForm(form);
 
     document.getElementById("FormDiv").appendChild(form);
-  }else{
+  } else {
     formOpen = false;
     document.getElementById("FormDiv").innerHTML = "";
   }
@@ -162,7 +187,7 @@ function MakeInputUI() {
 RowInputForm creates a dynamic form, that the
 user can submit inorder to add a row
 */
-function RowInputForm(form){
+function rowInputForm(form) {
   //This creates a input box for every single header item
   for (let i = 0; i < datalength; i++) {
     var formCreate = document.createElement("input");
@@ -171,12 +196,12 @@ function RowInputForm(form){
     formCreate.classList.add("dynamicForm");
     form.append(formCreate);
   }
-  
+
   //Creates a submin button
   var formButton = document.createElement("input");
   formButton.setAttribute("type", "button");
   formButton.setAttribute("value", "Add Item");
-  formButton.setAttribute("onclick", "AddRow()");
+  formButton.setAttribute("onclick", "addRow()");
   form.append(formButton);
 }
 
@@ -188,10 +213,10 @@ AddRow function reads from the dynamic form in order
 to add a new row of data, that can then be downloaded
 with the preexisting items in the form
 */
-function AddRow() {
+function addRow() {
 
   var formInfo = document.getElementsByClassName("dynamicForm");
-  
+
   //Takes data from form and adds it to cells
   var table = document.getElementById("myTable");
   var row = table.insertRow(-1);
@@ -203,6 +228,7 @@ function AddRow() {
 
   //Creates one more cell, with a delete button
   deleteButtonOrCheck(row, rowlength);
+  editButtonOrHeader(row, rowlength);
   rowlength++;
 
   //Appends newly created row and cells to the table
@@ -215,11 +241,11 @@ function AddRow() {
 selectToggle Toggles wiether or not a row has been selected for
 deletion by the user
 */
-function selectToggle(id){
+function selectToggle(id) {
   var check = document.getElementById(id);
-  if(check.classList.contains("selected")){
+  if (check.classList.contains("selected")) {
     check.classList.remove("selected");
-  }else{
+  } else {
     check.classList.add("selected");
   }
 }
@@ -228,16 +254,84 @@ function selectToggle(id){
 rowDelete recersevlly looks at all items selected for deletion
 then deletes the row from the database
 */
-function rowDelete(){
+function rowDelete() {
   var rows = document.getElementsByClassName("selected");
   rows[0].parentNode.parentNode.remove();
   rowDelete();
 }
 
+/*
+editOrSave is a driver function 
+
+this allows the user to toggle the edit and save button 
+for a row. 
+*/
+function editOrSaveRow(id){
+  var selectedButton = document.getElementById(id);
+  if(selectedButton.value == "Edit"){
+    editRow(id);
+    editToSave(selectedButton);
+  }else{
+    saveRow(id);
+    saveToEdit(selectedButton);
+  }
+}
+
+/*
+The editRow function turns all of the text inside of the
+current table cells into text boxes with data you can
+change and edit
+*/
+function editRow(id) {
+  var selectedButton = document.getElementById(id);
+  var selectedRow = selectedButton.parentNode.parentNode;
+  var selectedCells = selectedRow.getElementsByTagName("td");
+
+  for (var i = 0; i < datalength; i++) {
+    var temp = selectedCells[i].innerHTML;
+    selectedCells[i].innerHTML = "<input type='text' id='" + headerData[i] + "' value='" + temp + "'>";
+  }
+}
+
+/*
+editToSave will change the value of the edit 
+button to a save button
+*/
+function editToSave(selectedButton) {
+  selectedButton.setAttribute("value", "Save");
+}
+
+/*
+The saveRow function will change all fo the editable
+text boxes into reguler text, within the cells of the
+table.
+*/
+function saveRow(id) {
+  var selectedButton = document.getElementById(id);
+  var selectedRow = selectedButton.parentNode.parentNode;
+  var selectedInputs = selectedRow.getElementsByTagName("input");
+  var selectedCells = selectedRow.getElementsByTagName("td");
+  for (var i = 0; i < datalength; i++) {
+    var temp = selectedInputs[0].value;
+    selectedCells[i].innerHTML = temp;
+  }
+}
+
+/*
+saveToEdit will change the value of the save
+button to a edit button
+*/
+function saveToEdit(selectedButton) {
+  selectedButton.setAttribute("value", "Edit");
+}
+
+
+
+
 //Got code bellow from GeeksForGeeks 
 //https://www.geeksforgeeks.org/how-to-export-html-table-to-csv-using-javascript/
 function tableToCSV() {
- 
+
   // Variable to store the final csv data
   var csv_data = [];
 
@@ -245,20 +339,20 @@ function tableToCSV() {
   var rows = document.getElementsByTagName('tr');
   for (var i = 0; i < rows.length; i++) {
 
-      // Get each column data
-      var cols = rows[i].querySelectorAll('td,th');
+    // Get each column data
+    var cols = rows[i].querySelectorAll('td,th');
 
-      // Stores each csv row data
-      var csvrow = [];
-      for (var j = 0; j < cols.length-1; j++) {
+    // Stores each csv row data
+    var csvrow = [];
+    for (var j = 0; j < cols.length - 2; j++) {
 
-          // Get the text data of each cell
-          // of a row and push it to csvrow
-          csvrow.push(cols[j].innerHTML);
-      }
+      // Get the text data of each cell
+      // of a row and push it to csvrow
+      csvrow.push(cols[j].innerHTML);
+    }
 
-      // Combine each column value with comma
-      csv_data.push(csvrow.join(","));
+    // Combine each column value with comma
+    csv_data.push(csvrow.join(","));
   }
 
   // Combine each row data with new line character
@@ -274,7 +368,7 @@ function downloadCSVFile(csv_data) {
   // Create CSV file object and feed
   // our csv_data into it
   CSVFile = new Blob([csv_data], {
-      type: "text/csv"
+    type: "text/csv"
   });
 
   // Create to temporary link to initiate
