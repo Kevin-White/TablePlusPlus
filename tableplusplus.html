@@ -16,8 +16,8 @@
 
 <body>
 
-  <input type="file" id="fileUpload" />
-  <input type="button" id="upload" value="Upload CSV" onclick="uploadData()" />
+  <input type="file" id="fileUpload" value="Upload CSV" onchange="uploadData(event)" />
+
   <input type="button" id="download" value="Download CSV" onclick="tableToCSV()" />
   
   <hr />
@@ -28,6 +28,8 @@
   </div>
   <div id="TableDiv">
   </div>
+  <p id ="ifNoMatch">
+  </p>
 </body>
 
 </html>

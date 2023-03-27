@@ -16,28 +16,41 @@ if not match is found, it will hide the row.
 
 */
 function searchData() {
-  let input, filter, table, tr, td, txtValue;
+  let input, filter, table, tr, td, txtValue, matchFound;
 
   //Intialising Variables
   input = document.getElementById("myInput");
   filter = input.value.toUpperCase();
   table = document.getElementById("myTable");
   tr = table.getElementsByClassName("body");
+  matchFound = false;
 
   //Searches through all columns of every row for matching data
   for (let i = 0; i < tr.length; i++) {
+    let rowMatchFound = false;
     for (let j = 0; j < datalength; j++) {
       td = tr[i].cells[j];
       if (td) {
         txtValue = td.textContent || td.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
+          rowMatchFound = true;
           break;  // break out of inner loop if match found
-        } else {
-          tr[i].style.display = "none";
         }
       }
     }
+    if (rowMatchFound) {
+      tr[i].style.display = "";
+      matchFound = true;
+    } else {
+      tr[i].style.display = "none";
+    }
+  }
+
+  // If no matching rows were found, display a message
+  if (!matchFound) {
+    document.getElementById("ifNoMatch").innerHTML = "The object you are looking for is not in this list. You can add it by useing the + next to the search bar.";
+  } else {
+    document.getElementById("ifNoMatch").innerHTML = "";
   }
 }
 
@@ -52,6 +65,11 @@ made on the HTML frontend
 */
 function uploadData() {
   var fileUpload = document.getElementById("fileUpload");
+
+  if (fileUpload.files.length === 0 || !fileUpload.files[0].name.endsWith(".csv")) {
+    alert("Please select a CSV file.");
+    return;
+  }
 
   var reader = new FileReader();
 
@@ -93,7 +111,14 @@ function makeTable(input) {
 
       for (var j = 0; j < cells.length; j++) {
         var cell = row.insertCell(-1);
-        cell.innerHTML = cells[j];
+        if(i == 0){
+          cell.setAttribute("onclick","sortTable(" + j + ", this)");
+          cell.setAttribute("id","Normal");
+          cell.innerHTML = cells[j];
+          cell.innerHTML += "<text class=\"sortDisplay\">&updownarrow;</text>";
+        }else{
+          cell.innerHTML = cells[j];
+        }
       }
 
       deleteButtonOrCheck(row, i);
@@ -324,6 +349,89 @@ button to a edit button
 function saveToEdit(selectedButton) {
   selectedButton.setAttribute("value", "Edit");
 }
+
+//This is Code edited by us, orgionaly from W3Schools
+function sortTable(rowNumber, header) {
+  var table, rows, switching, i, x, y, shouldSwitch, otherHeaders;
+  table = document.getElementById("myTable");
+  switching = true;
+
+  if (header.id == "Normal" || header.id == "Dessending") {
+    while (otherHeaders = document.getElementById("Assending")) {
+      otherHeaders.setAttribute("id", "Normal");
+      var display = otherHeaders.getElementsByTagName("text");
+      display[0].innerHTML= "&updownarrow;"; 
+    }
+    while (otherHeaders = document.getElementById("Dessending")) {
+      otherHeaders.setAttribute("id", "Normal");
+      var display = otherHeaders.getElementsByTagName("text");
+      display[0].innerHTML= "&updownarrow;";
+    }
+    header.setAttribute("id", "Assending");
+    var display = header.getElementsByTagName("text");
+    display[0].innerHTML= "&ShortUpArrow;";
+
+
+    while (switching) {
+      switching = false;
+      rows = table.rows;
+
+
+      for (i = 1; i < (rows.length - 1); i++) {
+        shouldSwitch = false;
+
+        x = rows[i].getElementsByTagName("TD")[rowNumber];
+        y = rows[i + 1].getElementsByTagName("TD")[rowNumber];
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+      }
+    }
+  }
+  else if (header.id == "Assending") {
+    while (otherHeaders = document.getElementById("Assending")) {
+      otherHeaders.setAttribute("id", "Normal");
+      var display = otherHeaders.getElementsByTagName("text");
+      display[0].innerHTML= "&updownarrow;";
+    }
+    while (otherHeaders = document.getElementById("Dessending")) {
+      otherHeaders.setAttribute("id", "Normal");
+      var display = otherHeaders.getElementsByTagName("text");
+      display[0].innerHTML= "&updownarrow;";
+      }
+    header.setAttribute("id", "Dessending");
+    var display = header.getElementsByTagName("text");
+    display[0].innerHTML= "&ShortDownArrow;";
+
+    while (switching) {
+      switching = false;
+      rows = table.rows;
+
+
+      for (i = 1; i < (rows.length - 1); i++) {
+        shouldSwitch = false;
+
+        x = rows[i + 1].getElementsByTagName("TD")[rowNumber];
+        y = rows[i].getElementsByTagName("TD")[rowNumber];
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+      }
+    }
+  }
+}
+//End of code inspred by W3Schools
+
 
 
 
