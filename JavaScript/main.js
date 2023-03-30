@@ -92,6 +92,8 @@ function makeTable(input) {
   var table = document.createElement("table");
   table.setAttribute("id", "myTable");
   var rows = input.split("\n");
+  var lastTouchedRow = false;
+  var LTRAdder = 0;
 
   rowlength = rows.length - 1;
   for (var i = 0; i < rows.length; i++) {
@@ -99,6 +101,10 @@ function makeTable(input) {
     if (datalength == 0) {
       datalength = cells.length;
       headerData = cells;
+      if(headerData[datalength-1].trim() == "Last Touched"){
+        lastTouchedRow = true;
+        LTRAdder++;
+      }
     }
 
     if (cells.length > 1) {
@@ -109,21 +115,24 @@ function makeTable(input) {
         row.classList.add("body");
       }
 
-      for (var j = 0; j < cells.length; j++) {
+      for (var j = 0; j < cells.length - LTRAdder; j++) {
         var cell = row.insertCell(-1);
         if(i == 0){
           cell.setAttribute("onclick","sortTable(" + j + ", this)");
           cell.setAttribute("id","Normal");
-          cell.innerHTML = cells[j];
+          cell.innerHTML = cells[j].trim();
           cell.innerHTML += "<text class=\"sortDisplay\">&updownarrow;</text>";
         }else{
-          cell.innerHTML = cells[j];
+          cell.innerHTML = cells[j].trim();
         }
       }
-
+      timeStampOrHeader(row, cells, i, lastTouchedRow);
       deleteButtonOrCheck(row, i);
       editButtonOrHeader(row, i);
     }
+  }
+  if(lastTouchedRow){
+    datalength--;
   }
   return table;
 }
@@ -137,6 +146,46 @@ function displayHTMLTable(table) {
   var TableDiv = document.getElementById("TableDiv");
   TableDiv.innerHTML = "";
   TableDiv.appendChild(table);
+}
+
+/*
+This function will recive weather or not the table already has a timestamp.
+If the table does not have a timestamp collum, it will create one and add 
+the current date.
+
+If the row already has a timestamp, it will read in that data and add the collum to the class
+"TimeStamp" for easyer editing by other code.
+*/
+function timeStampOrHeader(row, cells, i, lastTouchedRow){
+  if(lastTouchedRow){
+    var cell = row.insertCell(-1);
+    if(i > 0){
+      cell.innerHTML = cells[datalength-1].trim();
+      cell.setAttribute("class", "TimeStamp");
+    }else{
+      cell.setAttribute("onclick","sortTable(" + (datalength - 1) + ", this)");
+      cell.setAttribute("id","Normal");
+      cell.innerHTML = cells[datalength-1].trim();
+      cell.innerHTML += "<text class=\"sortDisplay\">&updownarrow;</text>";
+    }
+  }else{
+    if (i > 0) {
+      var cell = row.insertCell(-1);
+      cell.setAttribute("class", "TimeStamp");
+      
+      let yourDate = new Date();
+      const offset = yourDate.getTimezoneOffset();
+	    yourDate = new Date(yourDate.getTime() -(offset*60*1000));
+
+      cell.innerHTML = yourDate.toISOString().split('T')[0];
+    } else {
+      var cell = row.insertCell(-1);
+      cell.innerHTML = "Last Touched";
+      cell.setAttribute("onclick","sortTable(" + datalength + ", this)");
+      cell.setAttribute("id","Normal");
+      cell.innerHTML += "<text class=\"sortDisplay\">&updownarrow;</text>";
+    }
+  }
 }
 
 /*
@@ -252,6 +301,7 @@ function addRow() {
   }
 
   //Creates one more cell, with a delete button
+  timeStampOrHeader(row, null, rowlength, false);
   deleteButtonOrCheck(row, rowlength);
   editButtonOrHeader(row, rowlength);
   rowlength++;
@@ -290,6 +340,9 @@ editOrSave is a driver function
 
 this allows the user to toggle the edit and save button 
 for a row. 
+
+WHen the save button is clicked is changes the timestamp for the current row
+to todays date.
 */
 function editOrSaveRow(id){
   var selectedButton = document.getElementById(id);
@@ -299,6 +352,12 @@ function editOrSaveRow(id){
   }else{
     saveRow(id);
     saveToEdit(selectedButton);
+    var testing = selectedButton.parentNode.parentNode;
+    var timeStamp = testing.getElementsByClassName("TimeStamp");
+    let yourDate = new Date();
+    const offset = yourDate.getTimezoneOffset();
+	  yourDate = new Date(yourDate.getTime() -(offset*60*1000));
+    timeStamp[0].innerHTML = yourDate.toISOString().split('T')[0];
   }
 }
 
@@ -453,10 +512,16 @@ function tableToCSV() {
     // Stores each csv row data
     var csvrow = [];
     for (var j = 0; j < cols.length - 2; j++) {
-
+      
       // Get the text data of each cell
       // of a row and push it to csvrow
-      csvrow.push(cols[j].innerHTML);
+      // Will also elimnate any extra HTML from the cells
+      if(cols[j].innerHTML.substring(0, cols[j].innerHTML.indexOf('<')) == ""){
+        csvrow.push(cols[j].innerHTML);
+      }else{
+        csvrow.push(cols[j].innerHTML.substring(0, cols[j].innerHTML.indexOf('<')));
+      }
+      
     }
 
     // Combine each column value with comma
