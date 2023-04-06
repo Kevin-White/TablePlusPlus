@@ -6,10 +6,38 @@
   <script src="JavaScript/main.js"></script>
 </head>
 <style>
-  table,
-  th,
-  td {
-    border: 1px solid black;
+  table 
+  {
+  border-collapse: collapse;
+  width: 100%;
+  } 
+  td
+  {
+    border: black; 
+    text-align: center;
+  }
+  th
+  {
+    text-align: center;
+    background-color: yellow; 
+    color: black; 
+  }
+  tr:nth-child(even)
+  {
+    background-color:lightgrey;
+  }
+
+  tr:hover{
+    background-color:yellow; 
+  }
+  .button{
+    background-color: blue;
+    border: none;
+    color: white; 
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+
   }
 
 </style>
@@ -23,7 +51,7 @@
   <hr />
 
   <input type="text" id="myInput" onkeyup='searchData()' placeholder="Search...">
-  <input type="button" id="AddItem" value="+" onclick="makeInputUI()">
+  <input type="button" id="AddItem" value="+" class="button" onclick="makeInputUI()">
   <div id="FormDiv">
   </div>
   <div id="TableDiv">
