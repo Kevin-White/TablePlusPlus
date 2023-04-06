@@ -16,38 +16,121 @@
     border: black; 
     text-align: center;
   }
-  th
+  .head
   {
     text-align: center;
-    background-color: yellow; 
-    color: black; 
+    background-color: #2155CD;
+    color: white; 
   }
   tr:nth-child(even)
   {
-    background-color:lightgrey;
+    background-color:#90d3dd;
   }
 
-  tr:hover{
+  .body:hover{
     background-color:yellow; 
   }
   .button{
-    background-color: blue;
+    background-color: #79DAE8;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
     border: none;
-    color: white; 
-    padding: 12px 24px;
+    margin-right: 25px;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
     font-size: 16px;
-    border-radius: 8px;
+    cursor: pointer;
+    border-radius: 5px;
+
+    float: right;
 
   }
+  .custom-file-upload {
+  background-color: #79DAE8;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+  border: none;
+  margin-right: 25px;
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.search-bar {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+  border: 2px solid;
+  margin-right: 25px;
+  color: black;
+  padding: 10px 20px;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.hidden-upload{
+  display:none;
+}
+
+select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+select:focus {
+  outline: none;
+}
+
+option {
+  padding: 10px;
+  font-size: 16px;
+  background-color: white;
+  color: black;
+}
+
+.sortDisplay{
+  font-family: 'Courier New', monospace;
+  font-size: 30px; 
+  font-weight: bold;
+  position:relative; 
+}
+.deleteButton{
+  background-color: #E8F9FD;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+  border: none;
+  color: black;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.editorsaveButton{
+  background-color: #E8F9FD;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+  border: none;
+  color: black;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 5px;
+}
 </style>
 
 <body>
 
-  <input type="file" id="fileUpload" value="Upload CSV" onchange="uploadData(event)" />
+  <label for="fileUpload" class="custom-file-upload">Choose File</label>
+  <input type="file" id="fileUpload" value="Upload CSV"  class= "hidden-upload" onchange="uploadData(event)" />
 
-  <input type="button" id="download" value="Download CSV" onclick="tableToCSV()" />
-
-  <text>Rows Per Page:</text>
+  <text style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; ">Rows Per Page:</text>
   <select name="Rows" id="pagingRowInput" value="25" onchange="pagingInput(value)">
     <option value="5">5</option>
     <option value="10">10</option>
@@ -55,13 +138,20 @@
     <option value="50">50</option>
   </select>
 
+  <input type="button" id="download" value="Download CSV" class= "button" onclick="tableToCSV()" />
+
+  
+
 
   <hr/>
 
-  <input type="text" id="myInput" onkeyup='searchData()' placeholder="Search...">
-  <input type="button" id="AddItem" value="+" onclick="makeInputUI()">
+  <input type="text" id="myInput" class= "search-bar" onkeyup='searchData()' placeholder="Search...">
+  <input type="button" id="AddItem" value="+" class= "custom-file-upload " onclick="makeInputUI()">
+  
+  
   <div id="FormDiv">
   </div>
+  <hr/>
   <div id="TableDiv">
   </div>
   <p id="ifNoMatch">

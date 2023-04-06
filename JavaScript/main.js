@@ -216,6 +216,7 @@ function deleteButtonOrCheck(row, i) {
     delcheck.setAttribute("type", "button");
     delcheck.setAttribute("onclick", "rowDelete()");
     delcheck.setAttribute("value", "Delete Item(s)");
+    delcheck.classList.add("deleteButton");
   }
   cellDelBox.appendChild(delcheck);
 }
@@ -236,6 +237,7 @@ function editButtonOrHeader(row, i) {
     editButton.setAttribute("onclick", "editOrSaveRow(this.id)");
     editButton.setAttribute("value", "Edit");
     editButton.setAttribute("id", "editButton" + i);
+    editButton.classList.add("editorsaveButton");
     cellEditBox.appendChild(editButton);
   } else {
     var cellEditBox = row.insertCell(-1);
@@ -263,9 +265,11 @@ function makeInputUI() {
     rowInputForm(form);
 
     document.getElementById("FormDiv").appendChild(form);
+    document.getElementById("AddItem").value = "-";
   } else {
     formOpen = false;
     document.getElementById("FormDiv").innerHTML = "";
+    document.getElementById("AddItem").value = "+";
   }
 }
 
