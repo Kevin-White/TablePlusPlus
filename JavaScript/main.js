@@ -2,6 +2,7 @@ var datalength = 0;
 var rowlength = 0;
 var headerData;
 var formOpen = false;
+var rowPerPage = 5;
 
 
 /*
@@ -40,9 +41,11 @@ function searchData() {
     }
     if (rowMatchFound) {
       tr[i].style.display = "";
+      tr[i].setAttribute("class", "body inSearch");
       matchFound = true;
     } else {
       tr[i].style.display = "none";
+      tr[i].setAttribute("class", "body notInSearch");
     }
   }
 
@@ -51,8 +54,10 @@ function searchData() {
     document.getElementById("ifNoMatch").innerHTML = "The object you are looking for is not in this list. You can add it by useing the + next to the search bar.";
   } else {
     document.getElementById("ifNoMatch").innerHTML = "";
+    tablePagination();
   }
 }
+
 
 /*
 UploadData is a driver function
@@ -70,6 +75,9 @@ function uploadData() {
     alert("Please select a CSV file.");
     return;
   }
+  //Changes the title of the document to include the name of the file uploaded
+  document.title = fileUpload.files[0].name + ' | Table Plus Plus';
+
 
   var reader = new FileReader();
 
@@ -101,7 +109,7 @@ function makeTable(input) {
     if (datalength == 0) {
       datalength = cells.length;
       headerData = cells;
-      if(headerData[datalength-1].trim() == "Last Touched"){
+      if (headerData[datalength - 1].trim() == "Last Touched") {
         lastTouchedRow = true;
         LTRAdder++;
       }
@@ -113,16 +121,17 @@ function makeTable(input) {
         row.classList.add("head");
       } else {
         row.classList.add("body");
+        row.classList.add("inSearch")
       }
 
       for (var j = 0; j < cells.length - LTRAdder; j++) {
         var cell = row.insertCell(-1);
-        if(i == 0){
-          cell.setAttribute("onclick","sortTable(" + j + ", this)");
-          cell.setAttribute("id","Normal");
+        if (i == 0) {
+          cell.setAttribute("onclick", "sortTable(" + j + ", this)");
+          cell.setAttribute("id", "Normal");
           cell.innerHTML = cells[j].trim();
           cell.innerHTML += "<text class=\"sortDisplay\">&updownarrow;</text>";
-        }else{
+        } else {
           cell.innerHTML = cells[j].trim();
         }
       }
@@ -131,7 +140,7 @@ function makeTable(input) {
       editButtonOrHeader(row, i);
     }
   }
-  if(lastTouchedRow){
+  if (lastTouchedRow) {
     datalength--;
   }
   return table;
@@ -146,6 +155,7 @@ function displayHTMLTable(table) {
   var TableDiv = document.getElementById("TableDiv");
   TableDiv.innerHTML = "";
   TableDiv.appendChild(table);
+  tablePagination();
 }
 
 /*
@@ -156,33 +166,33 @@ the current date.
 If the row already has a timestamp, it will read in that data and add the collum to the class
 "TimeStamp" for easyer editing by other code.
 */
-function timeStampOrHeader(row, cells, i, lastTouchedRow){
-  if(lastTouchedRow){
+function timeStampOrHeader(row, cells, i, lastTouchedRow) {
+  if (lastTouchedRow) {
     var cell = row.insertCell(-1);
-    if(i > 0){
-      cell.innerHTML = cells[datalength-1].trim();
+    if (i > 0) {
+      cell.innerHTML = cells[datalength - 1].trim();
       cell.setAttribute("class", "TimeStamp");
-    }else{
-      cell.setAttribute("onclick","sortTable(" + (datalength - 1) + ", this)");
-      cell.setAttribute("id","Normal");
-      cell.innerHTML = cells[datalength-1].trim();
+    } else {
+      cell.setAttribute("onclick", "sortTable(" + (datalength - 1) + ", this)");
+      cell.setAttribute("id", "Normal");
+      cell.innerHTML = cells[datalength - 1].trim();
       cell.innerHTML += "<text class=\"sortDisplay\">&updownarrow;</text>";
     }
-  }else{
+  } else {
     if (i > 0) {
       var cell = row.insertCell(-1);
       cell.setAttribute("class", "TimeStamp");
-      
+
       let yourDate = new Date();
       const offset = yourDate.getTimezoneOffset();
-	    yourDate = new Date(yourDate.getTime() -(offset*60*1000));
+      yourDate = new Date(yourDate.getTime() - (offset * 60 * 1000));
 
       cell.innerHTML = yourDate.toISOString().split('T')[0];
     } else {
       var cell = row.insertCell(-1);
       cell.innerHTML = "Last Touched";
-      cell.setAttribute("onclick","sortTable(" + datalength + ", this)");
-      cell.setAttribute("id","Normal");
+      cell.setAttribute("onclick", "sortTable(" + datalength + ", this)");
+      cell.setAttribute("id", "Normal");
       cell.innerHTML += "<text class=\"sortDisplay\">&updownarrow;</text>";
     }
   }
@@ -237,8 +247,10 @@ function editButtonOrHeader(row, i) {
 /*
 MakeInputUI is a driver function
 
-it allows the user to create a form, 
-and appends it to the proper div
+Make UI dynamicly creates a form for the user to type
+information into and interact with. Once the user 
+selects the "Add Item" Button the new data form the form
+is appended to the data uploaded by the user.
 */
 function makeInputUI() {
   if (!formOpen) {
@@ -258,8 +270,9 @@ function makeInputUI() {
 }
 
 /*
-RowInputForm creates a dynamic form, that the
-user can submit inorder to add a row
+RowInputForm creates a dynamic form that uses the 
+schama uploaded by the user. so this form is dynamic
+and fits to all the different data the user can upload.
 */
 function rowInputForm(form) {
   //This creates a input box for every single header item
@@ -284,8 +297,9 @@ function rowInputForm(form) {
 AddRow is a driver function
 
 AddRow function reads from the dynamic form in order
-to add a new row of data, that can then be downloaded
-with the preexisting items in the form
+to add a new row of data. This row is appended to the 
+bottom of the preexisting data, and can be downloaded
+along with the rest of the data.
 */
 function addRow() {
 
@@ -295,6 +309,7 @@ function addRow() {
   var table = document.getElementById("myTable");
   var row = table.insertRow(-1);
   row.classList.add("body");
+  row.classList.add("inSearch");
   for (var i = 0; i < datalength; i++) {
     var cell = row.insertCell(-1);
     cell.innerHTML = formInfo[i].value;
@@ -313,7 +328,7 @@ function addRow() {
 }
 
 /*
-selectToggle Toggles wiether or not a row has been selected for
+selectToggle Toggles weather or not a row has been selected for
 deletion by the user
 */
 function selectToggle(id) {
@@ -339,24 +354,27 @@ function rowDelete() {
 editOrSave is a driver function 
 
 this allows the user to toggle the edit and save button 
-for a row. 
+for a row. When the user selects edit, they can now interact
+with the text in the row. When the user clicks save the
+text within the row, is saved, and can no longer be edited
+by the user.
 
-WHen the save button is clicked is changes the timestamp for the current row
+When the save button is clicked is changes the timestamp for the current row
 to todays date.
 */
-function editOrSaveRow(id){
+function editOrSaveRow(id) {
   var selectedButton = document.getElementById(id);
-  if(selectedButton.value == "Edit"){
+  if (selectedButton.value == "Edit") {
     editRow(id);
     editToSave(selectedButton);
-  }else{
+  } else {
     saveRow(id);
     saveToEdit(selectedButton);
     var testing = selectedButton.parentNode.parentNode;
     var timeStamp = testing.getElementsByClassName("TimeStamp");
     let yourDate = new Date();
     const offset = yourDate.getTimezoneOffset();
-	  yourDate = new Date(yourDate.getTime() -(offset*60*1000));
+    yourDate = new Date(yourDate.getTime() - (offset * 60 * 1000));
     timeStamp[0].innerHTML = yourDate.toISOString().split('T')[0];
   }
 }
@@ -409,7 +427,17 @@ function saveToEdit(selectedButton) {
   selectedButton.setAttribute("value", "Edit");
 }
 
-//This is Code edited by us, orgionaly from W3Schools
+
+/*
+The sortTable page will let he user click the headers of each
+collum in order to sort the collum in assending or dessending order.
+If the collum is being clicked for the first time is sorts in assending
+order. For the second click is the collum is sorted in decsending 
+order.
+
+If another colum is areay sorted, the sort functionality is reset. 
+As if a sort was never applied to that collum.
+*/
 function sortTable(rowNumber, header) {
   var table, rows, switching, i, x, y, shouldSwitch, otherHeaders;
   table = document.getElementById("myTable");
@@ -419,16 +447,16 @@ function sortTable(rowNumber, header) {
     while (otherHeaders = document.getElementById("Assending")) {
       otherHeaders.setAttribute("id", "Normal");
       var display = otherHeaders.getElementsByTagName("text");
-      display[0].innerHTML= "&updownarrow;"; 
+      display[0].innerHTML = "&updownarrow;";
     }
     while (otherHeaders = document.getElementById("Dessending")) {
       otherHeaders.setAttribute("id", "Normal");
       var display = otherHeaders.getElementsByTagName("text");
-      display[0].innerHTML= "&updownarrow;";
+      display[0].innerHTML = "&updownarrow;";
     }
     header.setAttribute("id", "Assending");
     var display = header.getElementsByTagName("text");
-    display[0].innerHTML= "&ShortUpArrow;";
+    display[0].innerHTML = "&ShortUpArrow;";
 
 
     while (switching) {
@@ -456,16 +484,16 @@ function sortTable(rowNumber, header) {
     while (otherHeaders = document.getElementById("Assending")) {
       otherHeaders.setAttribute("id", "Normal");
       var display = otherHeaders.getElementsByTagName("text");
-      display[0].innerHTML= "&updownarrow;";
+      display[0].innerHTML = "&updownarrow;";
     }
     while (otherHeaders = document.getElementById("Dessending")) {
       otherHeaders.setAttribute("id", "Normal");
       var display = otherHeaders.getElementsByTagName("text");
-      display[0].innerHTML= "&updownarrow;";
-      }
+      display[0].innerHTML = "&updownarrow;";
+    }
     header.setAttribute("id", "Dessending");
     var display = header.getElementsByTagName("text");
-    display[0].innerHTML= "&ShortDownArrow;";
+    display[0].innerHTML = "&ShortDownArrow;";
 
     while (switching) {
       switching = false;
@@ -488,11 +516,8 @@ function sortTable(rowNumber, header) {
       }
     }
   }
+  tablePagination();
 }
-//End of code inspred by W3Schools
-
-
-
 
 
 //Got code bellow from GeeksForGeeks 
@@ -512,16 +537,16 @@ function tableToCSV() {
     // Stores each csv row data
     var csvrow = [];
     for (var j = 0; j < cols.length - 2; j++) {
-      
+
       // Get the text data of each cell
       // of a row and push it to csvrow
       // Will also elimnate any extra HTML from the cells
-      if(cols[j].innerHTML.substring(0, cols[j].innerHTML.indexOf('<')) == ""){
+      if (cols[j].innerHTML.substring(0, cols[j].innerHTML.indexOf('<')) == "") {
         csvrow.push(cols[j].innerHTML);
-      }else{
+      } else {
         csvrow.push(cols[j].innerHTML.substring(0, cols[j].innerHTML.indexOf('<')));
       }
-      
+
     }
 
     // Combine each column value with comma
@@ -563,3 +588,89 @@ function downloadCSVFile(csv_data) {
   document.body.removeChild(temp_link);
 }
 //End of code used from GeeksForGeeks 
+
+
+/*
+The tablePagination function alows the user the option to
+break up the table into smaller sections in order to make
+for easyer readability. This also alows for the user to
+switch between pages to more ealsy filter though larger
+databases.
+*/
+function tablePagination() {
+  var table = document.querySelector('#myTable');
+  if (!table) {
+    return;
+  }
+  var tbody = table.querySelector('tbody');
+  var rows = Array.from(tbody.querySelectorAll('tr.inSearch'));
+  var itemsPerPage = rowPerPage;
+  var numPages = Math.ceil(rows.length / itemsPerPage);
+  let currentPage = 1;
+
+  /*
+    This function displayes the current page of the table
+    while hiding the rest from the user. only if the pages
+    are also within the scope of the search the user may
+    preform
+  */
+  function showPage(page) {
+    currentPage = page;
+    var start = (page - 1) * itemsPerPage;
+    var end = parseInt(start) + parseInt(rowPerPage);
+    rows.forEach((row, index) => {
+      if (index >= start && index < end && row.classList.contains('inSearch')) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+    updatePagination();
+  }
+
+
+  /*
+  the updatePagination button keeps track of what page
+  the user is on and if there is a page before or after
+  the current page.
+  */
+  function updatePagination() {
+    var pages = document.querySelector('#pages');
+    var prevBtn = document.querySelector('#prev');
+    var nextBtn = document.querySelector('#next');
+    pages.textContent = `${currentPage} / ${numPages}`;
+    if (currentPage === 1) {
+      prevBtn.disabled = true;
+    } else {
+      prevBtn.disabled = false;
+    }
+    if (currentPage === numPages) {
+      nextBtn.disabled = true;
+    } else {
+      nextBtn.disabled = false;
+    }
+  }
+
+  //This function moves the user to the previs page if available
+  function prevPage() {
+    if (currentPage > 1) {
+      showPage(currentPage - 1);
+    }
+  }
+
+  //This function moves the user to the next page if available
+  function nextPage() {
+    if (currentPage < numPages) {
+      showPage(currentPage + 1);
+    }
+  }
+
+  showPage(currentPage);
+  document.querySelector('#prev').addEventListener('click', prevPage);
+  document.querySelector('#next').addEventListener('click', nextPage);
+}
+
+function pagingInput(value) {
+  rowPerPage = value;
+  tablePagination();
+}
