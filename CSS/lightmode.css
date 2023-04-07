@@ -1,0 +1,128 @@
+table 
+{
+border-collapse: collapse;
+width: 100%;
+} 
+td
+{
+  border: black; 
+  text-align: center;
+}
+.head
+{
+  text-align: center;
+  background-color: #0d2661;
+  color: white; 
+}
+.body.inSearch:nth-child(even)
+{
+  background-color:#90d3dd;
+}
+
+.body:hover{
+  background-color:rgb(203, 231, 176); 
+}
+.button{
+  background-color: #79DAE8;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+  border: none;
+  margin-right: 25px;
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+
+  float: right;
+
+}
+.custom-file-upload {
+background-color: #79DAE8;
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+border: none;
+margin-right: 25px;
+color: black;
+padding: 10px 20px;
+text-align: center;
+display: inline-block;
+font-size: 16px;
+cursor: pointer;
+border-radius: 5px;
+}
+
+.search-bar {
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+border: 2px solid;
+margin-right: 25px;
+color: black;
+padding: 10px 20px;
+display: inline-block;
+font-size: 16px;
+cursor: pointer;
+border-radius: 5px;
+}
+.hidden-upload{
+display:none;
+}
+
+select {
+padding: 10px;
+font-size: 16px;
+border-radius: 5px;
+background-color: #f2f2f2;
+border: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+}
+
+select:focus {
+outline: none;
+}
+
+option {
+padding: 10px;
+font-size: 16px;
+background-color: white;
+color: black;
+}
+
+.sortDisplay{
+font-family: 'Courier New', monospace;
+font-size: 30px; 
+font-weight: bold;
+position:relative; 
+}
+.deleteButton{
+background-color: #E8F9FD;
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+border: none;
+color: black;
+text-align: center;
+display: inline-block;
+cursor: pointer;
+border-radius: 5px;
+}
+.editorsaveButton{
+background-color: #E8F9FD;
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+border: none;
+color: black;
+text-align: center;
+display: inline-block;
+cursor: pointer;
+border-radius: 5px;
+}
+.nextorprevButton{
+background-color: #E8F9FD;
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+border: none;
+padding: 15px;
+color: black;
+text-align: center;
+display: inline-block;
+cursor: pointer;
+border-radius: 5px;
+}
