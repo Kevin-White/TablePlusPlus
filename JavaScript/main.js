@@ -279,6 +279,16 @@ schama uploaded by the user. so this form is dynamic
 and fits to all the different data the user can upload.
 */
 function rowInputForm(form) {
+
+  //Creates a submin button
+  var formButton = document.createElement("input");
+  formButton.setAttribute("type", "button");
+  formButton.setAttribute("value", "Add Item");
+  formButton.setAttribute("onclick", "addRow()");
+  formButton.classList.add("custom-file-upload");
+  form.append(formButton);
+  
+  form.append(document.createElement("br"));
   //This creates a input box for every single header item
   for (let i = 0; i < datalength; i++) {
     var formCreate = document.createElement("input");
@@ -288,12 +298,7 @@ function rowInputForm(form) {
     form.append(formCreate);
   }
 
-  //Creates a submin button
-  var formButton = document.createElement("input");
-  formButton.setAttribute("type", "button");
-  formButton.setAttribute("value", "Add Item");
-  formButton.setAttribute("onclick", "addRow()");
-  form.append(formButton);
+  
 }
 
 
