@@ -269,7 +269,7 @@ function makeInputUI() {
   } else {
     formOpen = false;
     document.getElementById("FormDiv").innerHTML = "";
-    document.getElementById("AddItem").value = "+";
+    document.getElementById("AddItem").value = "Add Item";
   }
 }
 

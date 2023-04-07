@@ -123,6 +123,17 @@ option {
   cursor: pointer;
   border-radius: 5px;
 }
+.nextorprevButton{
+  background-color: #E8F9FD;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+  border: none;
+  padding: 15px;
+  color: black;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 5px;
+}
 </style>
 
 <body>
@@ -130,13 +141,6 @@ option {
   <label for="fileUpload" class="custom-file-upload">Choose File</label>
   <input type="file" id="fileUpload" value="Upload CSV"  class= "hidden-upload" onchange="uploadData(event)" />
 
-  <text style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; ">Rows Per Page:</text>
-  <select name="Rows" id="pagingRowInput" value="25" onchange="pagingInput(value)">
-    <option value="5">5</option>
-    <option value="10">10</option>
-    <option value="25">25</option>
-    <option value="50">50</option>
-  </select>
 
   <input type="button" id="download" value="Download CSV" class= "button" onclick="tableToCSV()" />
 
@@ -146,7 +150,7 @@ option {
   <hr/>
 
   <input type="text" id="myInput" class= "search-bar" onkeyup='searchData()' placeholder="Search...">
-  <input type="button" id="AddItem" value="+" class= "custom-file-upload " onclick="makeInputUI()">
+  <input type="button" id="AddItem" value="Add Item" class= "custom-file-upload " style="float:right;" onclick="makeInputUI()">
   
   
   <div id="FormDiv">
@@ -158,11 +162,20 @@ option {
   </p>
 
   <!-- Pagination links -->
-  <div id="pagination">
-    <button id="prev" disabled>&laquo; Prev</button>
-    <span id="pages"></span>
-    <button id="next">Next &raquo;</button>
+    <button id="prev" class= "nextorprevButton" disabled>&laquo; Prev</button>
+    <span id="pages" style="font-size: 20px;"></span>
+    <button id="next" class="nextorprevButton">Next &raquo;</button>
+    <div id="pagination" style="float:right;">
+    <text style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Rows Per Page:</text>
+  <select name="Rows" id="pagingRowInput" value="25" onchange="pagingInput(value)">
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="25">25</option>
+    <option value="50">50</option>
+  </select>
   </div>
+
+  
 
 </body>
 
