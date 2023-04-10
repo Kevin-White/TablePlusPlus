@@ -3,6 +3,16 @@ table
 border-collapse: collapse;
 width: 100%;
 } 
+
+span
+{
+  background-color: rgb(203, 231, 176); /* Set background color */
+  border: 1px solid #000000; /* Set border */
+  min-width: 25px; /* Set minimum width */
+  display: inline-block; /* Make sure element is always visible */
+  padding: 1px; /* Add some padding to make it look nicer */
+}
+
 td
 {
   border: black; 
@@ -14,12 +24,13 @@ td
   background-color: #0d2661;
   color: white; 
 }
-.body.inSearch:nth-child(even)
+
+.inSearch:nth-of-type(even)
 {
   background-color:#90d3dd;
 }
 
-.body:hover{
+.body.inSearch:hover{
   background-color:rgb(203, 231, 176); 
 }
 .button{

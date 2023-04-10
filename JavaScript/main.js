@@ -288,11 +288,12 @@ function rowInputForm(form) {
     var formCreate = document.createElement("input");
     formCreate.setAttribute("type", "text");
     formCreate.setAttribute("placeholder", headerData[i]);
+    formCreate.setAttribute("style", (100/datalength)-1 + "px");
     formCreate.classList.add("dynamicForm");
     form.append(formCreate);
   }
   
-  
+  form.append(document.createElement("br"));
   //Creates a submin button
   var formButton = document.createElement("input");
   formButton.setAttribute("type", "button");
@@ -402,7 +403,8 @@ function editRow(id) {
 
   for (var i = 0; i < datalength; i++) {
     var temp = selectedCells[i].innerHTML;
-    selectedCells[i].innerHTML = "<input type='text' id='" + headerData[i] + "' value='" + temp + "'>";
+    //<span class="input" role="textbox" contenteditable>temp</span>
+    selectedCells[i].innerHTML = "<span class='input' role'textbox' id='" + headerData[i] + "' contenteditable>" + temp + "</span>";
   }
 }
 
@@ -422,10 +424,10 @@ table.
 function saveRow(id) {
   var selectedButton = document.getElementById(id);
   var selectedRow = selectedButton.parentNode.parentNode;
-  var selectedInputs = selectedRow.getElementsByTagName("input");
+  var selectedInputs = selectedRow.getElementsByTagName("span");
   var selectedCells = selectedRow.getElementsByTagName("td");
   for (var i = 0; i < datalength; i++) {
-    var temp = selectedInputs[0].value;
+    var temp = selectedInputs[0].innerHTML;
     selectedCells[i].innerHTML = temp;
   }
 }
