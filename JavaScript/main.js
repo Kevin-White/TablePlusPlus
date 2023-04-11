@@ -280,19 +280,19 @@ and fits to all the different data the user can upload.
 */
 function rowInputForm(form) {
 
-  
-  
+
+
   form.append(document.createElement("br"));
   //This creates a input box for every single header item
   for (let i = 0; i < datalength; i++) {
     var formCreate = document.createElement("input");
     formCreate.setAttribute("type", "text");
     formCreate.setAttribute("placeholder", headerData[i]);
-    formCreate.setAttribute("style", (100/datalength)-1 + "px");
+    formCreate.setAttribute("style", (100 / datalength) - 1 + "px");
     formCreate.classList.add("dynamicForm");
     form.append(formCreate);
   }
-  
+
   form.append(document.createElement("br"));
   //Creates a submin button
   var formButton = document.createElement("input");
@@ -301,7 +301,7 @@ function rowInputForm(form) {
   formButton.setAttribute("onclick", "addRow()");
   formButton.classList.add("custom-file-upload");
   form.append(formButton);
-  
+
 }
 
 
@@ -686,4 +686,21 @@ function tablePagination() {
 function pagingInput(value) {
   rowPerPage = value;
   tablePagination();
+}
+
+function lightAndDarkMode() {
+  var linkElement = document.getElementById("lightDarkStyle");
+  var lightDarkButton = document.getElementById("lightDark");
+
+if (linkElement.getAttribute("value") === "light") {
+  linkElement.href = "CSS/darkmode.css";
+  linkElement.setAttribute("value", "dark");
+  lightDarkButton.value = "Light Mode";
+} else {
+  linkElement.href = "CSS/lightmode.css";
+  linkElement.setAttribute("value", "light");
+  lightDarkButton.value = "Dark Mode";
+}
+
+
 }

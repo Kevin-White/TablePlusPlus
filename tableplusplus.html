@@ -4,7 +4,7 @@
 <head>
   <title>Table Plus Plus</title>
   <script src="JavaScript/main.js"></script>
-  <link rel="stylesheet" href="CSS/lightmode.css">
+  <link id="lightDarkStyle" value="light" rel="stylesheet" href="CSS/lightmode.css">
 
 </head>
 
@@ -14,9 +14,9 @@
   <label for="fileUpload" class="custom-file-upload">Choose File</label>
   <input type="file" id="fileUpload" value="Upload CSV"  class= "hidden-upload" onchange="uploadData(event)" />
 
-
+  
   <input type="button" id="download" value="Download CSV" class= "button" onclick="tableToCSV()" />
-
+  <input type="button" value="Dark Mode" id="lightDark" class="lightDark" onclick="lightAndDarkMode()" />
   
 
 

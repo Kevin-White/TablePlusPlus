@@ -6,7 +6,7 @@ width: 100%;
 
 span
 {
-  background-color: rgb(203, 231, 176); /* Set background color */
+  background-color: #cbe7b0; /* Set background color */
   border: 1px solid #000000; /* Set border */
   min-width: 25px; /* Set minimum width */
   display: inline-block; /* Make sure element is always visible */
@@ -31,8 +31,9 @@ td
 }
 
 .body.inSearch:hover{
-  background-color:rgb(203, 231, 176); 
+  background-color:#cbe7b0; 
 }
+
 .button{
   background-color: #79DAE8;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
@@ -49,6 +50,23 @@ td
   float: right;
 
 }
+
+.lightDark{
+  background-color: #32565c;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+  border: none;
+  margin-right: 25px;
+  color: #ffffff;
+  padding: 10px 20px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+
+  float: right;
+}
+
 .custom-file-upload {
 background-color: #79DAE8;
 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
