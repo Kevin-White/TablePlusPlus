@@ -159,7 +159,7 @@ function displayHTMLTable(table) {
 }
 
 /*
-This function will recive weather or not the table already has a timestamp.
+timeStampOrHeader will recive weather or not the table already has a timestamp.
 If the table does not have a timestamp collum, it will create one and add 
 the current date.
 

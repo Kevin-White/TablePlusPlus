@@ -1,14 +1,20 @@
+/*This is the dark mode of our program. You can changw to this mode when you click the dark mode button on top right of our program */
+/*The main body our dark mode, which has darker background */
 body{
     background-color: #303030;
     color: white;
 }
-
+/* This is the main table for our program */
 table 
 {
 border-collapse: collapse;
 width: 100%;
 } 
-
+/* Span is used for user input when the user clicks the dedit button and it will 
+highlight the background of the fields green, there is a minimum size to the span
+So if the user deletes the entire data, there is still space for the user to enter the data
+There is no maximum size of this span.
+*/
 span
 {
   background-color: #606e53; /* Set background color */
@@ -17,29 +23,31 @@ span
   display: inline-block; /* Make sure element is always visible */
   padding: 1px; /* Add some padding to make it look nicer */
 }
-
+/*td defines a cell of table that contains data */ 
 td
 {
   border: #ffffff; 
   text-align: center;
   color: #ffffff;
 }
+/*This class is where we design the head or the first row of the table */
 .head
 {
   text-align: center;
   background-color: #0d2661;
   color: #000000; 
 }
-
+/*inSearch:nth-of-type(even) class will change the color of alternating rows */
 .inSearch:nth-of-type(even)
 {
   background-color:#3e5b5f;
   color: #ffffff
 }
-
+/*body.inSearch:hover class will highlight the row that you go to in a different color than background */ 
 .body.inSearch:hover{
   background-color:#606e53; 
 }
+/*button class will style the buttons download and add*/
 .button{
   background-color: #32565c;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
@@ -56,7 +64,7 @@ td
   float: right;
 
 }
-
+/*lightDark class is a button which will allow the users to switch between light and dark mode */
 .lightDark{
   background-color: #79DAE8;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
@@ -72,7 +80,7 @@ td
 
   float: right;
 }
-
+/*custom-file-upload class modfies the choose file button */
 .custom-file-upload {
 background-color: #32565c;
 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
@@ -86,7 +94,7 @@ font-size: 16px;
 cursor: pointer;
 border-radius: 5px;
 }
-
+/*search-bar class styles the search bar*/
 .search-bar {
 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
 border: 2px solid;
@@ -99,10 +107,11 @@ font-size: 16px;
 cursor: pointer;
 border-radius: 5px;
 }
+/*There is an upload button hidden inside of choose file, but we have modified choose file and hide the upload */
 .hidden-upload{
 display:none;
 }
-
+/*select modifies the rows per page */
 select {
 padding: 10px;
 font-size: 16px;
@@ -114,35 +123,36 @@ border: none;
 -moz-appearance: none;
 appearance: none;
 }
-
+/*select:focus doesn't change the formating of focus section when they are being clicked*/
 select:focus {
 outline: none;
 }
-
+/* Option changes the background color for rows per pages*/
 option {
 padding: 10px;
 font-size: 16px;
 background-color: black;
 color: white;
 }
-
+/*input.dynamicForm changes the background of the input fields and text of the field to match the dark mode */
 input.dynamicForm
 {
   color: #ffffff;
   background-color: #303030;
 }
-
+/*placeholder changes the placeholder text color */
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #b0b0b0;
   opacity: 1; /* Firefox */
 }
-
+/*sortDisplay will modify way the sorting buttons looks*/
 .sortDisplay{
 font-family: 'Courier New', monospace;
 font-size: 30px; 
 font-weight: bold;
 position:relative; 
 }
+/*deleteButton will modify the way the delete button looks */
 .deleteButton{
 background-color: #3d4244;
 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
@@ -153,6 +163,7 @@ display: inline-block;
 cursor: pointer;
 border-radius: 5px;
 }
+/*editorsaveButton will modify the way the edit or save button looks */
 .editorsaveButton{
 background-color: #3d4244;
 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
@@ -163,6 +174,7 @@ display: inline-block;
 cursor: pointer;
 border-radius: 5px;
 }
+/*nextorprevButton will modofy the way next or prev button looks */
 .nextorprevButton{
 background-color: #3d4244;
 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
