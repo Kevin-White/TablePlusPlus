@@ -1,11 +1,14 @@
 /*This is the light mode, this is our main/default page */
+
+
 /* This is the main table for our program */
 table 
 {
 border-collapse: collapse;
 width: 100%; 
-} 
+}
 
+ 
 /* Span is used for user input when the user clicks the dedit button and it will 
 highlight the background of the fields green, there is a minimum size to the span
 So if the user deletes the entire data, there is still space for the user to enter the data
@@ -19,12 +22,16 @@ span
   display: inline-block; 
   padding: 1px; 
 }
+
+
 /*td defines a cell of table that contains data */ 
 td
 {
-  border: black; /
+  border: black;
   text-align: center; 
 }
+
+
 /*This class is where we design the head or the first row of the table */
 .head
 {
@@ -32,15 +39,21 @@ td
   background-color: #0d2661;
   color: white; 
 }
+
+
 /*inSearch:nth-of-type(even) class will change the color of alternating rows */
 .inSearch:nth-of-type(even)
 {
   background-color:#90d3dd;
 }
+
+
 /*body.inSearch:hover class will highlight the row that you go to in a different color than background */ 
 .body.inSearch:hover{
   background-color:#cbe7b0; 
 }
+
+
 /*button class will style the buttons download and add*/
 .button{
   background-color: #79DAE8;
@@ -58,6 +71,8 @@ td
   float: right;
 
 }
+
+
 /*lightDark class is a button which will allow the users to switch between light and dark mode */
 .lightDark{
   background-color: #32565c;
@@ -74,6 +89,8 @@ td
 
   float: right;
 }
+
+
 /*custom-file-upload class modfies the choose file button */
 .custom-file-upload {
 background-color: #79DAE8;
@@ -88,6 +105,8 @@ font-size: 16px;
 cursor: pointer;
 border-radius: 5px;
 }
+
+
 /*search-bar class styles the search bar*/
 .search-bar {
 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
@@ -100,10 +119,14 @@ font-size: 16px;
 cursor: pointer;
 border-radius: 5px;
 }
+
+
 /*There is an upload button hidden inside of choose file, but we have modified choose file and hide the upload */
 .hidden-upload{
 display:none;
 }
+
+
 /*select modifies the rows per page */
 select {
 padding: 10px;
@@ -115,10 +138,14 @@ border: none;
 -moz-appearance: none;
 appearance: none;
 }
+
+
 /*select:focus doesn't change the formating of focus section when they are being clicked*/
 select:focus {
 outline: none;
 }
+
+
 /* Option changes the background color for rows per pages*/
 option {
 padding: 10px;
@@ -126,6 +153,8 @@ font-size: 16px;
 background-color: white;
 color: black;
 }
+
+
 /*sortDisplay will modify way the sorting buttons looks*/
 .sortDisplay{
 font-family: 'Courier New', monospace;
@@ -133,6 +162,8 @@ font-size: 30px;
 font-weight: bold;
 position:relative; 
 }
+
+
 /*deleteButton will modify the way the delete button looks */
 .deleteButton{
 background-color: #E8F9FD;
@@ -144,6 +175,8 @@ display: inline-block;
 cursor: pointer;
 border-radius: 5px;
 }
+
+
 /*editorsaveButton will modify the way the edit or save button looks */
 .editorsaveButton{
 background-color: #E8F9FD;
@@ -155,6 +188,8 @@ display: inline-block;
 cursor: pointer;
 border-radius: 5px;
 }
+
+
 /*nextorprevButton will modofy the way next or prev button looks */
 .nextorprevButton{
 background-color: #E8F9FD;
@@ -167,3 +202,24 @@ display: inline-block;
 cursor: pointer;
 border-radius: 5px;
 }
+
+.helpLink
+{
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    left: 10px;
+    bottom: 10px;
+    position: fixed;
+    background-color: #79DAE8;
+    font-size: 32px;
+    padding: 10px 20px;
+    border-radius: 60px;
+    opacity: .6;
+    cursor: pointer;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+  cursor: auto;
+  }
+

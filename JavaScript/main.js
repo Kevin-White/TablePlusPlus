@@ -88,6 +88,7 @@ function uploadData() {
   reader.readAsText(fileUpload.files[0]);
 }
 
+
 /*
 makeTabel takes the CSV input and converts it to
 an HTML and then returns the tabe when it is done
@@ -146,6 +147,7 @@ function makeTable(input) {
   return table;
 }
 
+
 /*
 displayHTMLTable takes a already made html table and finds
 the approprate div on the front end in order to append 
@@ -157,6 +159,7 @@ function displayHTMLTable(table) {
   TableDiv.appendChild(table);
   tablePagination();
 }
+
 
 /*
 timeStampOrHeader will recive weather or not the table already has a timestamp.
@@ -197,6 +200,7 @@ function timeStampOrHeader(row, cells, i, lastTouchedRow) {
     }
   }
 }
+
 
 /*
 deleteButtonOrCheck will add a delte button to the first
@@ -246,6 +250,7 @@ function editButtonOrHeader(row, i) {
 
 }
 
+
 /*
 MakeInputUI is a driver function
 
@@ -279,8 +284,6 @@ schama uploaded by the user. so this form is dynamic
 and fits to all the different data the user can upload.
 */
 function rowInputForm(form) {
-
-
 
   form.append(document.createElement("br"));
   //This creates a input box for every single header item
@@ -339,6 +342,7 @@ function addRow() {
   TableDiv.appendChild(table);
 }
 
+
 /*
 selectToggle Toggles weather or not a row has been selected for
 deletion by the user
@@ -352,6 +356,7 @@ function selectToggle(id) {
   }
 }
 
+
 /*
 rowDelete recersevlly looks at all items selected for deletion
 then deletes the row from the database
@@ -361,6 +366,7 @@ function rowDelete() {
   rows[0].parentNode.parentNode.remove();
   rowDelete();
 }
+
 
 /*
 editOrSave is a driver function 
@@ -391,6 +397,7 @@ function editOrSaveRow(id) {
   }
 }
 
+
 /*
 The editRow function turns all of the text inside of the
 current table cells into text boxes with data you can
@@ -408,6 +415,7 @@ function editRow(id) {
   }
 }
 
+
 /*
 editToSave will change the value of the edit 
 button to a save button
@@ -415,6 +423,7 @@ button to a save button
 function editToSave(selectedButton) {
   selectedButton.setAttribute("value", "Save");
 }
+
 
 /*
 The saveRow function will change all fo the editable
@@ -431,6 +440,7 @@ function saveRow(id) {
     selectedCells[i].innerHTML = temp;
   }
 }
+
 
 /*
 saveToEdit will change the value of the save
@@ -574,6 +584,7 @@ function tableToCSV() {
 
 }
 
+
 function downloadCSVFile(csv_data) {
 
   // Create CSV file object and feed
@@ -692,15 +703,13 @@ function lightAndDarkMode() {
   var linkElement = document.getElementById("lightDarkStyle");
   var lightDarkButton = document.getElementById("lightDark");
 
-if (linkElement.getAttribute("value") === "light") {
-  linkElement.href = "CSS/darkmode.css";
-  linkElement.setAttribute("value", "dark");
-  lightDarkButton.value = "Light Mode";
-} else {
-  linkElement.href = "CSS/lightmode.css";
-  linkElement.setAttribute("value", "light");
-  lightDarkButton.value = "Dark Mode";
-}
-
-
+  if (linkElement.getAttribute("value") === "light") {
+    linkElement.href = "CSS/darkmode.css";
+    linkElement.setAttribute("value", "dark");
+    lightDarkButton.value = "Light Mode";
+  } else {
+    linkElement.href = "CSS/lightmode.css";
+    linkElement.setAttribute("value", "light");
+    lightDarkButton.value = "Dark Mode";
+  }
 }
