@@ -75,6 +75,9 @@ function uploadData() {
     alert("Please select a CSV file.");
     return;
   }
+
+  backupCookieUpload(fileUpload);
+
   //Changes the title of the document to include the name of the file uploaded
   document.title = fileUpload.files[0].name + ' | Table Plus Plus';
 
@@ -320,6 +323,13 @@ function addRow() {
 
   var formInfo = document.getElementsByClassName("dynamicForm");
 
+  for(var i = 0; i < formInfo.length; i++){
+    if(formInfo[i].value.includes(',')){
+      alert('Input cannot contain commas!')
+      return;
+    }
+  }
+
   //Takes data from form and adds it to cells
   var table = document.getElementById("myTable");
   var row = table.insertRow(-1);
@@ -363,8 +373,10 @@ then deletes the row from the database
 */
 function rowDelete() {
   var rows = document.getElementsByClassName("selected");
+  if(rows.length > 0){
   rows[0].parentNode.parentNode.remove();
   rowDelete();
+  }
 }
 
 
@@ -386,7 +398,7 @@ function editOrSaveRow(id) {
     editRow(id);
     editToSave(selectedButton);
   } else {
-    saveRow(id);
+    if(saveRow(id)){
     saveToEdit(selectedButton);
     var testing = selectedButton.parentNode.parentNode;
     var timeStamp = testing.getElementsByClassName("TimeStamp");
@@ -394,6 +406,7 @@ function editOrSaveRow(id) {
     const offset = yourDate.getTimezoneOffset();
     yourDate = new Date(yourDate.getTime() - (offset * 60 * 1000));
     timeStamp[0].innerHTML = yourDate.toISOString().split('T')[0];
+    }
   }
 }
 
@@ -435,10 +448,19 @@ function saveRow(id) {
   var selectedRow = selectedButton.parentNode.parentNode;
   var selectedInputs = selectedRow.getElementsByTagName("span");
   var selectedCells = selectedRow.getElementsByTagName("td");
+
+ for (var i = 0; i < selectedInputs.length; i++) {
+  if (selectedInputs[i].innerHTML.includes(',')) {
+    alert('Input cannot contain commas!');
+    return false;
+  }
+}
+
   for (var i = 0; i < datalength; i++) {
     var temp = selectedInputs[0].innerHTML;
     selectedCells[i].innerHTML = temp;
   }
+  return true;
 }
 
 
@@ -610,6 +632,8 @@ function downloadCSVFile(csv_data) {
   // trigger download
   temp_link.click();
   document.body.removeChild(temp_link);
+
+  backupCookieDownload(csv_data);
 }
 //End of code used from GeeksForGeeks 
 
@@ -713,3 +737,35 @@ function lightAndDarkMode() {
     lightDarkButton.value = "Dark Mode";
   }
 }
+
+function closeTop() {
+  var topDiv = document.querySelector(".top");
+  var hr = topDiv.nextElementSibling;
+
+  if (topDiv && hr) {
+    topDiv.style.display = "none";
+    hr.style.display = "none";
+  }
+}
+
+function backupCookieUpload(input) {
+  let file = input.files[0];
+  let reader = new FileReader();
+  reader.readAsText(file);
+  reader.onload = function() {
+    let data = reader.result;
+    // Set Item
+    localStorage.setItem("backup", data);
+  };
+}
+
+function backupCookieDownload(input) {
+  localStorage.setItem("backup", input);
+}
+
+function restoreBackup(){
+  var table =makeTable(localStorage.getItem("backup"));
+  displayHTMLTable(table);
+}
+
+

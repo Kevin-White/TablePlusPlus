@@ -7,12 +7,24 @@
   <link id="lightDarkStyle" value="light" rel="stylesheet" href="CSS/lightmode.css">
 
 </head>
-
+  
 
 <body>
+  
+
+  <div class="top">
+    <h1>Table Plus Plus</h1>
+    <p>The ultimate tool for database management</p>
+    <div class="closeTop" onclick="createBackup()">
+      X
+    </div>  
+  </div>
+
+  <hr/>
 
   <label for="fileUpload" class="custom-file-upload">Choose File</label>
   <input type="file" id="fileUpload" value="Upload CSV"  class= "hidden-upload" onchange="uploadData(event)" />
+  <input type="button" class="lightDark" style="float: left;" value="Restore Backup" onclick="restoreBackup()">
 
   
   <input type="button" id="download" value="Download CSV" class= "button" onclick="tableToCSV()" />
@@ -34,12 +46,13 @@
   <p id="ifNoMatch">
   </p>
 
-  <!-- Pagination links -->
     <button id="prev" class= "nextorprevButton" disabled>&laquo; Prev</button>
     <text id="pages" style="font-size: 20px;"></text>
     <button id="next" class="nextorprevButton">Next &raquo;</button>
     <div id="pagination" style="float:right;">
     <text style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Rows Per Page:</text>
+
+
   <select name="Rows" id="pagingRowInput" value="25" onchange="pagingInput(value)">
     <option value="5">5</option>
     <option value="10">10</option>
