@@ -227,6 +227,8 @@ cursor: pointer;
 border-radius: 5px;
 }
 
+
+/*syles the ? in the bottom right hand corrner of the site*/
 .helpLink
 {
     font-family: 'Helvetica', 'Arial', sans-serif;
@@ -242,6 +244,7 @@ border-radius: 5px;
 }
 
 
+/*Sets the backgound and text color for the header of the site*/
 .top{
   background-color: #0d2661; 
   padding: 10px; 
@@ -250,16 +253,22 @@ border-radius: 5px;
   color: white;
 }
 
+
+/*Sets title text for the header of the site*/
 .top h1 {
   text-align: center; 
   font-size: 48px; 
 }
 
+
+/*sets the subtitle text for the header of the site*/
 .top p{
   text-align: center; 
   font-size: 24px
 }
 
+
+/*sets the color of the X to close the header of the site*/
 .top .closeTop
 {
     font-family: 'Helvetica', 'Arial', sans-serif;
@@ -272,6 +281,8 @@ border-radius: 5px;
     cursor: pointer;
 }
 
+
+/*Sylies the link for the ? in the bottom right*/
 a {
   color: white;
   text-decoration: none;

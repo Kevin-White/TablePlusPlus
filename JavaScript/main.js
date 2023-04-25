@@ -657,7 +657,7 @@ function tablePagination() {
   let currentPage = 1;
 
   /*
-    This function displayes the current page of the table
+    the updatePagination function displayes the current page of the table
     while hiding the rest from the user. only if the pages
     are also within the scope of the search the user may
     preform
@@ -718,11 +718,19 @@ function tablePagination() {
   document.querySelector('#next').addEventListener('click', nextPage);
 }
 
+/*
+The paginInput function takes in how many row should be on each
+page of the HTML table
+*/
 function pagingInput(value) {
   rowPerPage = value;
   tablePagination();
 }
 
+/*
+The lightAndDarkMode function switches the css file used between
+light and dark mode
+*/
 function lightAndDarkMode() {
   var linkElement = document.getElementById("lightDarkStyle");
   var lightDarkButton = document.getElementById("lightDark");
@@ -738,6 +746,9 @@ function lightAndDarkMode() {
   }
 }
 
+/*
+The closeTop function lets you close the header of the web page
+*/
 function closeTop() {
   var topDiv = document.querySelector(".top");
   var hr = topDiv.nextElementSibling;
@@ -748,6 +759,10 @@ function closeTop() {
   }
 }
 
+/*
+the backupCookieUpload creates the backup of the most reasonlty 
+uploaded file replacing any other backup
+*/
 function backupCookieUpload(input) {
   let file = input.files[0];
   let reader = new FileReader();
@@ -759,12 +774,20 @@ function backupCookieUpload(input) {
   };
 }
 
+/*
+the backupCookieDownload creates the backup of the most reasonlty 
+downloaded file replacing any other backup
+*/
 function backupCookieDownload(input) {
   localStorage.setItem("backup", input);
 }
 
+/*
+the restoreBackup function creates an HTML table based on the backup
+if there is one
+*/
 function restoreBackup(){
-  var table =makeTable(localStorage.getItem("backup"));
+  var table = makeTable(localStorage.getItem("backup"));
   displayHTMLTable(table);
 }
 
